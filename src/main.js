@@ -257,35 +257,6 @@ function renderProjects() {
   });
 }
 
-// Add Video button specifically for the Brain Tumor project (checking title keyword)
-if (project.title.toLowerCase().includes('brain tumor')) {
-  buttonsHtml += `<a href="#" class="btn-sm btn-video">Video</a>`;
-}
-
-card.innerHTML = `
-      ${mediaHtml}
-      <div class="project-content">
-        <div class="project-header">
-           <h3 class="project-title">${project.title}</h3>
-           ${project.duration ? `<span class="project-date">${project.duration}</span>` : ''}
-        </div>
-        
-        <div class="project-tags">
-          ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-        </div>
-        
-        <ul class="project-desc">
-           ${project.description.map(d => `<li>${d}</li>`).join('')}
-        </ul>
-
-        <div class="project-actions">
-           ${buttonsHtml}
-        </div>
-      </div>
-    `;
-container.appendChild(card);
-  });
-}
 
 function determineTags(project) {
   const defaultTags = ['Tech'];
