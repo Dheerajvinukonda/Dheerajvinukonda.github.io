@@ -831,8 +831,9 @@
 
 /* Initial Fade In remains separate */
 .btn-glitch {
-  opacity: 0;
-  animation: fadeIn 1s ease-out 1s forwards;
+  opacity: 1;
+  /* Force Visible */
+  /* animation: fadeIn 1s ease-out 1s forwards; <-- REMOVED to fix bug */
 }
 
 /* Ensure button stays visible after animation */
