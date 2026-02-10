@@ -12,6 +12,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap"
     rel="stylesheet">
+  <!-- Manual CSS Link for No-Build Deployment -->
+  <link rel="stylesheet" href="src/style.css">
 </head>
 
 <body>
@@ -123,7 +125,7 @@
           <!-- Profile Image will be dynamically inserted here if available, otherwise stylish initials -->
           <div class="profile-container">
             <div class="profile-frame">
-              <img src="/assets/profile_photo.jpg" class="hero-profile-img" alt="Dheeraj Vinukonda">
+              <img src="public/assets/profile_photo.jpg" class="hero-profile-img" alt="Dheeraj Vinukonda">
             </div>
           </div>
           <h1 class="hero-name">Dheeraj Vinukonda</h1>
@@ -245,8 +247,9 @@
     <footer class="site-footer">
       <p class="copyright">&copy; 2026 Dheeraj Vinukonda.</p>
     </footer>
+    </footer>
   </div>
-  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="src/main.js"></script>
 </body>
 
 </html>

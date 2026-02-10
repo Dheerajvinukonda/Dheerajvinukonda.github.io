@@ -1,5 +1,6 @@
 import { resumeData } from './data.js';
-import './style.css';
+import { resumeData } from './data.js';
+// import './style.css'; // CSS is now linked in index.html for raw deployment
 
 // Setup DOM Elements
 document.addEventListener('DOMContentLoaded', () => {
