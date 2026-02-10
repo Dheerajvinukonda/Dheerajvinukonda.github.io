@@ -1814,22 +1814,21 @@ ul {
   /* Much tighter gap to content */
 }
 
-.media-placeholder {
+.project-media {
   width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  color: var(--color-text-muted);
-  font-family: var(--font-heading);
-  letter-spacing: 1px;
+  height: 250px;
+  /* Fixed height as requested */
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+  border: 1px solid rgba(0, 255, 249, 0.2);
 }
 
 .project-img-preview {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Ensures image fills the box without stretching */
   transition: transform 0.5s;
 }
 
