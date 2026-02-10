@@ -1,0 +1,250 @@
+import { resumeData } from './data.js';
+import './style.css';
+
+// Setup DOM Elements
+document.addEventListener('DOMContentLoaded', () => {
+  renderHeader();
+  renderAbout();
+  renderExperience();
+  renderProjects();
+  renderSkills();
+  setupNavigation();
+  setupSplash();
+});
+
+function setupSplash() {
+  const splash = document.getElementById('splash');
+  const btn = document.getElementById('enter-site');
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      splash.classList.add('hidden');
+    });
+
+    // Glitch Text Loop (OPEN <-> FUGA)
+    // The CSS animation runs on a 3s loop.
+    // The glitch visual effect happens from 85% to 92% of [0, 3s].
+    // That means at ~2.55s into the 3s cycle, the glitch starts.
+    // We want to swap the text right as the glitch starts to hide the transition.
+
+    // We start the interval slightly offset if we want perfection, but 3000ms loop is fine.
+    // Let's fire the first swap after 2.6s, then every 3s.
+
+    // Start the unequal loop: 3s OPEN, 1s FUGA
+    // We initiate the glitch effect during the transitions.
+
+    const startLoop = () => {
+      // Currently OPEN. Wait 3s.
+      setTimeout(() => {
+        triggerGlitch(btn);
+
+        // Swap to FUGA (mid-glitch approx 100ms in)
+        setTimeout(() => {
+          setBtnText(btn, '風雅');
+        }, 100);
+
+        // Wait 1s in Fuga state
+        setTimeout(() => {
+          triggerGlitch(btn);
+
+          // Swap back to OPEN
+          setTimeout(() => {
+            setBtnText(btn, 'OPEN');
+
+            // Restart loop
+            startLoop();
+          }, 100);
+
+        }, 1000);
+
+      }, 3000);
+    };
+
+    // Kickoff
+    setTimeout(() => {
+      btn.classList.add('visible'); // Lock opacity to 1
+      startLoop();
+    }, 2000); // Wait for initial fadeIn (1s delay + 1s duration)
+  }
+
+  // Fallback: Remove from DOM after transition to save resources
+  splash.addEventListener('transitionend', () => {
+    if (splash.classList.contains('hidden')) {
+      splash.style.display = 'none';
+    }
+  });
+}
+
+function setBtnText(btn, text) {
+  btn.setAttribute('data-text', text);
+  btn.textContent = text;
+}
+
+function triggerGlitch(btn) {
+  btn.classList.remove('glitching');
+  void btn.offsetWidth; // Trigger reflow to restart animation
+  btn.classList.add('glitching');
+  setTimeout(() => {
+    btn.classList.remove('glitching');
+  }, 300);
+}
+
+function renderHeader() {
+  // Update Hero Content
+  document.querySelector('.hero-name').textContent = resumeData.personalInfo.name;
+  document.querySelector('.hero-title').textContent = resumeData.personalInfo.title;
+  document.querySelector('.hero-tagline').textContent = resumeData.personalInfo.summary.split('.')[0] + '.';
+
+  // Update Profile Initials (if placeholder exists)
+  const placeholder = document.querySelector('.profile-placeholder');
+  if (placeholder) {
+    const initials = resumeData.personalInfo.name.split(' ').map(n => n[0]).join('');
+    placeholder.textContent = initials;
+  }
+}
+
+function renderAbout() {
+  const aboutContainer = document.getElementById('about-content');
+  const summaryParagraphs = resumeData.personalInfo.summary.split('. ').map(s => {
+    let clean = s.trim();
+    return clean ? `<p>${clean}.</p>` : '';
+  }).join('');
+  aboutContainer.innerHTML = summaryParagraphs;
+
+  // Transform Right Column to "Inspo" layout: Languages, Tools, Courses/Certs
+  const highlightsContainer = document.querySelector('.about-highlights');
+  if (highlightsContainer) {
+    highlightsContainer.classList.add('inspo-layout'); // Add specific class for styling
+    highlightsContainer.innerHTML = `
+      <div class="info-group">
+        <h4>TECHNOLOGIES:</h4>
+        <p>${resumeData.skills.technical.join(', ')}</p>
+      </div>
+      <div class="info-group">
+        <h4>TOOLS:</h4>
+        <p>${resumeData.skills.tools.join(', ')}</p>
+      </div>
+      <div class="info-group">
+        <h4>CERTIFICATIONS:</h4>
+        <ul class="clean-list">
+             ${resumeData.certifications.slice(0, 3).map(c => `<li>${c}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+  }
+}
+
+function renderExperience() {
+  const container = document.getElementById('experience-list');
+
+  resumeData.experience.forEach(job => {
+    const card = document.createElement('div');
+    card.className = 'exp-card';
+
+    // Create Logo Placeholder (Initial of company)
+    const companyInitial = job.company.charAt(0);
+
+    card.innerHTML = `
+      <div class="exp-logo">${companyInitial}</div>
+      <div class="exp-content">
+        <h3>${job.role}</h3>
+        <div class="exp-role">${job.company} | ${job.duration}</div>
+        <ul class="exp-desc">
+          ${job.description.map(desc => `<li>${desc}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderProjects() {
+  const container = document.getElementById('projects-list');
+
+  resumeData.projects.forEach(project => {
+    const card = document.createElement('div');
+    card.className = 'project-card';
+
+    // Determine tags based on description content or title
+    const tags = determineTags(project);
+
+    card.innerHTML = `
+      <div class="project-content">
+        <h3 class="project-title">${project.title}</h3>
+        <div class="project-tags">
+          ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+        <ul class="project-desc">
+           ${project.description.slice(0, 3).map(d => `<li>${d}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="project-footer">
+        <!-- Buttons parallel to inspiration site -->
+        ${project.duration ? `<span class="project-date">${project.duration}</span>` : ''}
+        <a href="#" class="btn-sm">Code</a>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function determineTags(project) {
+  const defaultTags = ['Tech'];
+  const desc = project.description.join(' ').toLowerCase();
+
+  if (desc.includes('python')) defaultTags.push('Python');
+  if (desc.includes('ai') || desc.includes('learning')) defaultTags.push('AI/ML');
+  if (desc.includes('iot')) defaultTags.push('IoT');
+  if (desc.includes('blockchain')) defaultTags.push('Blockchain');
+  if (desc.includes('security')) defaultTags.push('Cybersecurity');
+
+  // Remove default if others found and allow max 3
+  if (defaultTags.length > 1) defaultTags.shift();
+  return defaultTags.slice(0, 3);
+}
+
+function renderSkills() {
+  const techContainer = document.getElementById('tech-skills');
+
+  // Technical = Technical + Tools
+  // Excluding spoken Languages based on user feedback
+  const technicalSkills = [...resumeData.skills.technical, ...resumeData.skills.tools];
+
+  technicalSkills.forEach(skill => {
+    const tag = document.createElement('span');
+    tag.className = 'skill-tag';
+    tag.textContent = skill;
+    techContainer.appendChild(tag);
+  });
+
+  // Render Spoken Languages
+  const langContainer = document.getElementById('lang-list');
+  if (langContainer && resumeData.skills.languages) {
+    resumeData.skills.languages.forEach(lang => {
+      const item = document.createElement('div');
+      item.className = 'lang-item';
+      item.innerHTML = `<span class="lang-dot"></span>${lang}`;
+      langContainer.appendChild(item);
+    });
+  }
+
+  const certContainer = document.getElementById('cert-list');
+  resumeData.certifications.forEach(cert => {
+    const li = document.createElement('li');
+    li.textContent = cert;
+    certContainer.appendChild(li);
+  });
+}
+
+
+function setupNavigation() {
+  // Mobile Menu Toggle
+  const btn = document.querySelector('.mobile-menu-btn');
+  const nav = document.querySelector('.nav-links');
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+  }
+}
