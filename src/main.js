@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderExperience();
   renderProjects();
   renderSkills();
-  renderSkills();
+
   renderNav(); // Dynamic Nav
   setupNavigation();
   setupSplash();
