@@ -206,13 +206,21 @@ function renderProjects() {
     // Determine tags
     const tags = determineTags(project);
 
-    // Placeholder for GIF/Media
-    // In future, user can replace 'src' with actual gif paths based on project title
+    // Select Image based on title keywords
+    let imgPath = 'public/assets/default_project.png'; // Fallback
+    const titleLower = project.title.toLowerCase();
+
+    if (titleLower.includes('brain tumor')) {
+      imgPath = 'public/assets/project_brain.png';
+    } else if (titleLower.includes('hair') || titleLower.includes('toufai')) {
+      imgPath = 'public/assets/project_hair.png';
+    } else if (titleLower.includes('smoke') || titleLower.includes('iot')) {
+      imgPath = 'public/assets/project_iot.png';
+    }
+
     const mediaHtml = `
       <div class="project-media">
-        <div class="media-placeholder">
-           <span>Project Media/GIF</span>
-        </div>
+        <img src="${imgPath}" alt="${project.title}" class="project-img-preview">
       </div>
     `;
 
@@ -220,7 +228,7 @@ function renderProjects() {
     let buttonsHtml = `<a href="#" class="btn-sm btn-code">Code</a>`;
 
     // Add Video button specifically for the Brain Tumor project (checking title keyword)
-    if (project.title.toLowerCase().includes('brain tumor')) {
+    if (titleLower.includes('brain tumor')) {
       buttonsHtml += `<a href="#" class="btn-sm btn-video">Video</a>`;
     }
 
@@ -246,6 +254,36 @@ function renderProjects() {
       </div>
     `;
     container.appendChild(card);
+  });
+}
+
+// Add Video button specifically for the Brain Tumor project (checking title keyword)
+if (project.title.toLowerCase().includes('brain tumor')) {
+  buttonsHtml += `<a href="#" class="btn-sm btn-video">Video</a>`;
+}
+
+card.innerHTML = `
+      ${mediaHtml}
+      <div class="project-content">
+        <div class="project-header">
+           <h3 class="project-title">${project.title}</h3>
+           ${project.duration ? `<span class="project-date">${project.duration}</span>` : ''}
+        </div>
+        
+        <div class="project-tags">
+          ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+        
+        <ul class="project-desc">
+           ${project.description.map(d => `<li>${d}</li>`).join('')}
+        </ul>
+
+        <div class="project-actions">
+           ${buttonsHtml}
+        </div>
+      </div>
+    `;
+container.appendChild(card);
   });
 }
 
