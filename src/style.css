@@ -804,15 +804,21 @@
 
 /* Trigger animations via .glitching class */
 .btn-glitch.glitching::before {
+  content: attr(data-text);
   color: #ff00c1;
   z-index: 2;
+  opacity: 1;
+  /* Force visibility */
   animation: glitch-layer-1 0.4s linear;
   /* Fast one-shot glitch */
 }
 
 .btn-glitch.glitching::after {
+  content: attr(data-text);
   color: #00fff9;
   z-index: 1;
+  opacity: 1;
+  /* Force visibility */
   animation: glitch-layer-2 0.4s linear;
 }
 

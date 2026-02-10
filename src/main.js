@@ -89,7 +89,7 @@ function triggerGlitch(btn) {
   btn.classList.add('glitching');
   setTimeout(() => {
     btn.classList.remove('glitching');
-  }, 300);
+  }, 500); // Increased to 500ms to cover the 0.4s CSS animation
 }
 
 function renderHeader() {
