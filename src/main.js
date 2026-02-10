@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderExperience();
   renderProjects();
   renderSkills();
+  renderSkills();
+  renderNav(); // Dynamic Nav
   setupNavigation();
   setupSplash();
 });
@@ -92,6 +94,38 @@ function triggerGlitch(btn) {
   }, 500); // Increased to 500ms to cover the 0.4s CSS animation
 }
 
+function renderNav() {
+  const navContainer = document.querySelector('.nav-links');
+  if (!navContainer) return;
+
+  // Clear existing static links if we want to fully dynamic (optional, but cleaner)
+  // For now, let's just append the special button or recreate the list
+
+  // Let's keep specific links but add the "Welcome" / "Show Intro" one
+  // The HTML currently has: About, Experience, Projects, Skills, Contact
+
+  // We'll create a new LI for "Welcome"
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.href = "#";
+  a.textContent = "Welcome";
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const splash = document.getElementById('splash');
+    splash.style.display = 'flex'; // Ensure it's not display:none
+
+    // Force reflow
+    void splash.offsetWidth;
+
+    splash.classList.remove('hidden');
+    // Re-trigger animations if needed, but removing hidden might be enough
+    // Logic in setupSplash handles the hiding
+  });
+
+  // Prepend to list
+  navContainer.insertBefore(li, navContainer.firstChild);
+}
+
 function renderHeader() {
   // Update Hero Content
   document.querySelector('.hero-name').textContent = resumeData.personalInfo.name;
@@ -163,28 +197,52 @@ function renderExperience() {
 
 function renderProjects() {
   const container = document.getElementById('projects-list');
+  container.className = 'projects-vertical-list'; // Switch to vertical layout class
 
   resumeData.projects.forEach(project => {
     const card = document.createElement('div');
-    card.className = 'project-card';
+    card.className = 'project-card vertical';
 
-    // Determine tags based on description content or title
+    // Determine tags
     const tags = determineTags(project);
 
+    // Placeholder for GIF/Media
+    // In future, user can replace 'src' with actual gif paths based on project title
+    const mediaHtml = `
+      <div class="project-media">
+        <div class="media-placeholder">
+           <span>Project Media/GIF</span>
+        </div>
+      </div>
+    `;
+
+    // Conditional Buttons
+    let buttonsHtml = `<a href="#" class="btn-sm btn-code">Code</a>`;
+
+    // Add Video button specifically for the Brain Tumor project (checking title keyword)
+    if (project.title.toLowerCase().includes('brain tumor')) {
+      buttonsHtml += `<a href="#" class="btn-sm btn-video">Video</a>`;
+    }
+
     card.innerHTML = `
+      ${mediaHtml}
       <div class="project-content">
-        <h3 class="project-title">${project.title}</h3>
+        <div class="project-header">
+           <h3 class="project-title">${project.title}</h3>
+           ${project.duration ? `<span class="project-date">${project.duration}</span>` : ''}
+        </div>
+        
         <div class="project-tags">
           ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
         </div>
+        
         <ul class="project-desc">
-           ${project.description.slice(0, 3).map(d => `<li>${d}</li>`).join('')}
+           ${project.description.map(d => `<li>${d}</li>`).join('')}
         </ul>
-      </div>
-      <div class="project-footer">
-        <!-- Buttons parallel to inspiration site -->
-        ${project.duration ? `<span class="project-date">${project.duration}</span>` : ''}
-        <a href="#" class="btn-sm">Code</a>
+
+        <div class="project-actions">
+           ${buttonsHtml}
+        </div>
       </div>
     `;
     container.appendChild(card);
