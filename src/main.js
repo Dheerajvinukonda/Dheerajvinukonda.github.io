@@ -3,15 +3,23 @@ import { resumeData } from './data.js';
 
 // Setup DOM Elements
 document.addEventListener('DOMContentLoaded', () => {
-  renderHeader();
-  renderAbout();
-  renderExperience();
-  renderProjects();
-  renderSkills();
+  try {
+    renderHeader();
+    renderAbout();
+    renderExperience();
+    renderProjects();
+    renderSkills();
 
-  renderNav(); // Dynamic Nav
-  setupNavigation();
-  setupSplash();
+    renderNav(); // Dynamic Nav
+    setupNavigation();
+    setupSplash();
+  } catch (e) {
+    console.error(e);
+    // Emergency Error Display for User Feedback
+    const splashText = document.querySelector('.splash-text');
+    if (splashText) splashText.textContent = "JS Error: " + e.message;
+    alert("Critical Error: " + e.message);
+  }
 });
 
 function setupSplash() {
