@@ -26,20 +26,34 @@ function setupSplash() {
   const btn = document.getElementById('enter-site');
 
   if (btn) {
+    // 0. Visual Debug: Prove JS is running
+    btn.style.borderColor = "#00ff00"; // Green flash
+    setTimeout(() => {
+      btn.style.borderColor = ""; // Reset to CSS default
+    }, 1000);
+
+    // 0.5 Force Visibility (Safety Net)
+    btn.style.opacity = '1';
+    btn.classList.add('visible');
+
     // 1. Click Handler
     btn.addEventListener('click', () => {
       splash.style.opacity = '0';
+      // Fallback if transitionend doesn't fire
       setTimeout(() => {
         splash.style.display = 'none';
       }, 500);
     });
 
-    // 2. Specific Timing Loop (Open -> Fuga -> Open)
+    // 2. Specific Timing Loop (Open -> FW -> Open)
     // 3s wait (OPEN), then Glitch -> Fuga, 1.5s wait (Fuga), then Glitch -> Open.
 
+    // Define independent loop function to avoid gc or scope issues
     const runGlitchSequence = () => {
       // Phase 1: Wait 3000ms holding "OPEN"
       setTimeout(() => {
+        if (!document.contains(btn)) return; // Safety check
+
         // Trigger Glitch Effect
         triggerGlitch(btn);
 
@@ -50,6 +64,8 @@ function setupSplash() {
 
         // Phase 2: Wait 1500ms holding "Japanese"
         setTimeout(() => {
+          if (!document.contains(btn)) return; // Safety check
+
           // Trigger Glitch Effect Back
           triggerGlitch(btn);
 
@@ -67,6 +83,8 @@ function setupSplash() {
 
     // Initial Start
     runGlitchSequence();
+  } else {
+    console.error("Splash button not found!");
   }
 }
 
