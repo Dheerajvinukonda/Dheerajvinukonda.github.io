@@ -1784,9 +1784,25 @@ ul {
     opacity: 1;
   }
 
+
   100% {
     clip-path: polygon(0 64%, 100% 64%, 100% 64%, 0 64%);
     transform: translate(-2px, 0);
     opacity: 1;
   }
+}
+
+/* Skills Layout Improvements */
+.skills-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+  /* Massive gap between Technical Skills and Languages */
+}
+
+/* Specific spacing for Language Section Title */
+/* Targeting the 2nd column which holds Languages */
+.skills-col:nth-of-type(2) .section-title {
+  margin-bottom: 1rem;
+  /* Much tighter gap to content */
 }

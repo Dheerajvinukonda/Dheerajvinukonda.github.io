@@ -33,31 +33,34 @@ function setupSplash() {
     // Start the unequal loop: 3s OPEN, 1s FUGA
     // We initiate the glitch effect during the transitions.
 
+    // Unified Glitch Loop
     const startLoop = () => {
-      // Currently OPEN. Wait 3s.
+      // 1. Initial State: OPEN. Wait 3s.
       setTimeout(() => {
+        // Trigger glitch transition
         triggerGlitch(btn);
 
-        // Swap to FUGA (mid-glitch approx 100ms in)
+        // Swap to FUGA shortly after glitch starts (50ms)
         setTimeout(() => {
           setBtnText(btn, '風雅');
-        }, 100);
+        }, 50);
 
-        // Wait 1s in Fuga state
+        // 2. State: FUGA. Wait 1.5s.
         setTimeout(() => {
+          // Trigger glitch transition back
           triggerGlitch(btn);
 
-          // Swap back to OPEN
+          // Swap back to OPEN shortly after glitch starts (50ms)
           setTimeout(() => {
             setBtnText(btn, 'OPEN');
 
-            // Restart loop
+            // Restart Loop
             startLoop();
-          }, 100);
+          }, 50);
 
-        }, 1000);
+        }, 1500); // Shorter duration for Japanese text
 
-      }, 3000);
+      }, 3000); // Longer duration for English text
     };
 
     // Kickoff
