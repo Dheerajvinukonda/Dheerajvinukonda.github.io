@@ -166,20 +166,20 @@ function renderProjects() {
     card.className = 'project-card vertical';
     const tags = determineTags(project);
 
-    // Using Giphy media CDN URLs (more reliable than Tenor)
-    let imgPath = 'https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif'; // Default tech
+    // Using locally downloaded GIFs
+    let imgPath = 'public/assets/ai-classifier.gif'; // Default
     const titleLower = project.title.toLowerCase();
 
     if (titleLower.includes('brain tumor')) {
-      imgPath = 'https://media.giphy.com/media/3oKIPsx2VAYAgEHC12/giphy.gif'; // Brain/medical
+      imgPath = 'public/assets/brain-tumor.gif';
     } else if (titleLower.includes('hair') || titleLower.includes('toufai')) {
-      imgPath = 'https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif'; // Tech scan
+      imgPath = 'public/assets/hair-toufai.gif';
     } else if (titleLower.includes('smoke') || titleLower.includes('iot')) {
-      imgPath = 'https://media.giphy.com/media/26tPnAAJxXTvpLwJy/giphy.gif'; // Circuit/tech
+      imgPath = 'public/assets/iot-smoke.gif';
     } else if (titleLower.includes('crypto')) {
-      imgPath = 'https://media.giphy.com/media/trN9ht5RlE3Dcwavg2/giphy.gif'; // Bitcoin/crypto
+      imgPath = 'public/assets/crypto-forecast.gif';
     } else if (titleLower.includes('image classification') || titleLower.includes('ai')) {
-      imgPath = 'https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif'; // AI/data
+      imgPath = 'public/assets/ai-classifier.gif';
     }
 
     const mediaHtml = `
