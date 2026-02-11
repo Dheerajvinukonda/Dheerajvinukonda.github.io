@@ -1554,6 +1554,14 @@ ul {
 .nav-brand {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(138, 43, 226, 0.6));
 }
 
 .nav-welcome-text {
