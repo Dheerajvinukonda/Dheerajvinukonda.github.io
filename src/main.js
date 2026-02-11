@@ -26,8 +26,7 @@ function setupSplash() {
   }
 
   if (btn) {
-    btn.style.borderColor = "#00ff00";
-    setTimeout(() => { btn.style.borderColor = ""; }, 1000);
+    // Visual Debug (green flash removed after testing)
     btn.style.opacity = '1';
     btn.classList.add('visible');
 
@@ -37,21 +36,38 @@ function setupSplash() {
       setTimeout(() => { splash.style.display = 'none'; }, 500);
     });
 
+    // Glitch Sequence: OPEN (3s) → glitch → 風雅 (1.5s) → glitch → OPEN (repeat)
     const runGlitchSequence = () => {
+      // Phase 1: Hold "OPEN" for 3 seconds
       setTimeout(() => {
         if (!document.contains(btn)) return;
+
+        // Start glitch animation
         triggerGlitch(btn);
-        setTimeout(() => { setBtnText(btn, '風雅'); }, 100);
+
+        // Change text to Japanese during glitch
+        setTimeout(() => {
+          setBtnText(btn, '風雅');
+        }, 200);
+
+        // Phase 2: Hold "風雅" for 1.5 seconds
         setTimeout(() => {
           if (!document.contains(btn)) return;
+
+          // Start glitch animation back
           triggerGlitch(btn);
+
+          // Change text to OPEN during glitch
           setTimeout(() => {
             setBtnText(btn, 'OPEN');
+            // Restart the cycle
             runGlitchSequence();
-          }, 100);
+          }, 200);
         }, 1500);
       }, 3000);
     };
+
+    // Start the sequence
     runGlitchSequence();
   }
 }
@@ -65,7 +81,7 @@ function triggerGlitch(btn) {
   btn.classList.remove('glitching');
   void btn.offsetWidth;
   btn.classList.add('glitching');
-  setTimeout(() => { btn.classList.remove('glitching'); }, 500);
+  setTimeout(() => { btn.classList.remove('glitching'); }, 600);
 }
 
 function renderNav() {
