@@ -1624,6 +1624,9 @@ ul {
   height: 32px;
   object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(138, 43, 226, 0.6));
+  background: transparent !important;
+  mix-blend-mode: screen;
+  /* Makes dark backgrounds invisible */
 }
 
 .nav-welcome-text {
