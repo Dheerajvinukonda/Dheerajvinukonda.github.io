@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderExperience();
     renderProjects();
     renderSkills();
-    renderNav();
+    setupBackButton();
     setupNavigation();
     setupSplash();
   } catch (e) {
@@ -66,34 +66,21 @@ function triggerGlitch(btn) {
   setTimeout(() => { btn.classList.remove('glitching'); }, 600);
 }
 
-function renderNav() {
-  const navContainer = document.querySelector('.nav-links');
-  if (!navContainer) return;
-
-  const li = document.createElement('li');
-  const a = document.createElement('a');
-  a.href = "#";
-  a.textContent = "Welcome";
-  a.addEventListener('click', (e) => {
-    e.preventDefault();
-    const splash = document.getElementById('splash');
-
-    sessionStorage.removeItem('splashShown');
-
-    splash.style.display = 'flex';
-    splash.style.opacity = '0';
-
-    void splash.offsetWidth;
-
-    setTimeout(() => {
+function setupBackButton() {
+  const backBtn = document.getElementById('back-to-splash');
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem('splashShown');
+      const splash = document.getElementById('splash');
+      splash.style.display = 'flex';
       splash.style.opacity = '1';
-    }, 10);
-
-    splash.classList.remove('hidden');
-  });
-
-  li.appendChild(a);
-  navContainer.insertBefore(li, navContainer.firstChild);
+      // Reinitialize splash with fresh button
+      setTimeout(() => {
+        setupSplash();
+      }, 100);
+    });
+  }
 }
 
 function renderHeader() {

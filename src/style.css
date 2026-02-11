@@ -805,27 +805,30 @@
   text-transform: uppercase;
 }
 
-/* Trigger animations via .glitching class */
+/* SUPER VISIBLE GLITCH - Shows pink and cyan layers */
 .btn-glitch.glitching::before {
-  color: #ff00c1;
-  z-index: 10;
-  /* High z-index to show above everything */
-  opacity: 1 !important;
-  animation: glitch-layer-1 0.6s linear;
+  color: #ff00ff;
+  /* Bright magenta */
+  z-index: 100;
+  opacity: 0.9 !important;
+  animation: glitch-shake-1 0.5s ease-in-out;
+  text-shadow: 2px 2px 4px #ff00ff;
 }
 
 .btn-glitch.glitching::after {
-  color: #00fff9;
-  z-index: 9;
-  /* Just below ::before */
-  opacity: 1 !important;
-  animation: glitch-layer-2 0.6s linear;
+  color: #00ffff;
+  /* Bright cyan */
+  z-index: 99;
+  opacity: 0.9 !important;
+  animation: glitch-shake-2 0.5s ease-in-out;
+  text-shadow: -2px -2px 4px #00ffff;
 }
 
-/* Border Glitch - make button shake */
+/* Make button itself flash */
 .btn-glitch.glitching {
   opacity: 1 !important;
-  animation: glitch-border 0.6s linear;
+  animation: glitch-button-flash 0.5s ease-in-out;
+  border-color: #ff00ff !important;
 }
 
 /* Ensure button stays visible */
@@ -925,6 +928,66 @@
   100% {
     border-color: var(--color-primary);
     transform: skew(0deg);
+  }
+}
+
+/* Simple, visible glitch animations */
+@keyframes glitch-shake-1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-3px, 2px);
+  }
+
+  40% {
+    transform: translate(3px, -2px);
+  }
+
+  60% {
+    transform: translate(-2px, -3px);
+  }
+
+  80% {
+    transform: translate(2px, 3px);
+  }
+}
+
+@keyframes glitch-shake-2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(2px, -2px);
+  }
+
+  50% {
+    transform: translate(-2px, 2px);
+  }
+
+  75% {
+    transform: translate(3px, 1px);
+  }
+}
+
+@keyframes glitch-button-flash {
+
+  0%,
+  100% {
+    background: transparent;
+    border-color: var(--color-primary);
+  }
+
+  50% {
+    background: rgba(255, 0, 255, 0.1);
+    border-color: #ff00ff;
+    box-shadow: 0 0 20px #ff00ff;
   }
 }
 
