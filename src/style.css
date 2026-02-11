@@ -1092,6 +1092,7 @@ ul {
   margin-bottom: 1rem;
   background: linear-gradient(to right, #fff, var(--color-text-muted));
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 
