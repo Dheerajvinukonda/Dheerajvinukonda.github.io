@@ -78,17 +78,13 @@ function renderNav() {
     e.preventDefault();
     const splash = document.getElementById('splash');
 
-    // Clear the session flag so splash can be shown again
     sessionStorage.removeItem('splashShown');
 
-    // Reset and show splash
     splash.style.display = 'flex';
     splash.style.opacity = '0';
 
-    // Force reflow
     void splash.offsetWidth;
 
-    // Fade in
     setTimeout(() => {
       splash.style.opacity = '1';
     }, 10);
@@ -173,25 +169,25 @@ function renderProjects() {
     card.className = 'project-card vertical';
     const tags = determineTags(project);
 
-    // Working Tenor GIF URLs from stable sources
-    let imgPath = 'https://media.tenor.com/On79ZrtC_9EAAAAC/neural-network-artificial-intelligence.gif';
+    // Using Giphy media CDN URLs (more reliable than Tenor)
+    let imgPath = 'https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif'; // Default tech
     const titleLower = project.title.toLowerCase();
 
     if (titleLower.includes('brain tumor')) {
-      imgPath = 'https://media.tenor.com/5iWZ0kZdpa8AAAAC/brain-mri.gif';
+      imgPath = 'https://media.giphy.com/media/3oKIPsx2VAYAgEHC12/giphy.gif'; // Brain/medical
     } else if (titleLower.includes('hair') || titleLower.includes('toufai')) {
-      imgPath = 'https://media.tenor.com/wL0KUqAXiuQAAAAC/hair-salon.gif';
+      imgPath = 'https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif'; // Tech scan
     } else if (titleLower.includes('smoke') || titleLower.includes('iot')) {
-      imgPath = 'https://media.tenor.com/QKJk9Z3UgHIAAAAC/circuit-board.gif';
+      imgPath = 'https://media.giphy.com/media/26tPnAAJxXTvpLwJy/giphy.gif'; // Circuit/tech
     } else if (titleLower.includes('crypto')) {
-      imgPath = 'https://media.tenor.com/6aQfFDZ2VNEAAAAC/crypto-bitcoin.gif';
+      imgPath = 'https://media.giphy.com/media/trN9ht5RlE3Dcwavg2/giphy.gif'; // Bitcoin/crypto
     } else if (titleLower.includes('image classification') || titleLower.includes('ai')) {
-      imgPath = 'https://media.tenor.com/On79ZrtC_9EAAAAC/neural-network-artificial-intelligence.gif';
+      imgPath = 'https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif'; // AI/data
     }
 
     const mediaHtml = `
       <div class="project-media">
-        <img src="${imgPath}" alt="${project.title}" class="project-img-preview">
+        <img src="${imgPath}" alt="${project.title}" class="project-img-preview" loading="lazy">
       </div>
     `;
 
