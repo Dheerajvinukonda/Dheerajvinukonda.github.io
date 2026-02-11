@@ -77,12 +77,26 @@ function renderNav() {
   a.addEventListener('click', (e) => {
     e.preventDefault();
     const splash = document.getElementById('splash');
+
+    // Clear the session flag so splash can be shown again
+    sessionStorage.removeItem('splashShown');
+
+    // Reset and show splash
     splash.style.display = 'flex';
+    splash.style.opacity = '0';
+
+    // Force reflow
     void splash.offsetWidth;
-    splash.style.opacity = '1';
+
+    // Fade in
+    setTimeout(() => {
+      splash.style.opacity = '1';
+    }, 10);
+
     splash.classList.remove('hidden');
   });
 
+  li.appendChild(a);
   navContainer.insertBefore(li, navContainer.firstChild);
 }
 
