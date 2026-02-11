@@ -1292,8 +1292,8 @@ ul {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 800px;
-  /* Wider for better proportions */
+  max-width: 1000px;
+  /* Much wider to see full content */
   margin-bottom: 5rem;
   /* Large gap between each project */
 }
