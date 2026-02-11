@@ -1,4 +1,5 @@
 import { resumeData } from './data.js';
+import { initNeuralAnimation, initNodeAnimations } from './neural-animation.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   try {
@@ -10,12 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
     setupBackButton();
     setupNavigation();
     setupSplash();
+    // Initialize neural network animation for mobile compatibility
+    initNeuralAnimation();
+    initNodeAnimations();
   } catch (e) {
     console.error(e);
     const splashText = document.querySelector('.splash-text');
     if (splashText) splashText.textContent = "JS Error: " + e.message;
   }
 });
+
 
 function setupSplash() {
   const splash = document.getElementById('splash');
