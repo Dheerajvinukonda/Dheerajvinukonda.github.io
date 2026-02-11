@@ -1,6 +1,5 @@
 import { resumeData } from './data.js';
 
-// Setup DOM Elements
 document.addEventListener('DOMContentLoaded', () => {
   try {
     renderHeader();
@@ -8,16 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     renderExperience();
     renderProjects();
     renderSkills();
-
-    renderNav(); // Dynamic Nav
+    renderNav();
     setupNavigation();
     setupSplash();
   } catch (e) {
     console.error(e);
-    // Emergency Error Display for User Feedback
     const splashText = document.querySelector('.splash-text');
     if (splashText) splashText.textContent = "JS Error: " + e.message;
-    // alert("Critical Error: " + e.message); // Commented out to be less intrusive unless needed
   }
 });
 
@@ -25,66 +21,38 @@ function setupSplash() {
   const splash = document.getElementById('splash');
   const btn = document.getElementById('enter-site');
 
-  if (btn) {
-    // 0. Visual Debug: Prove JS is running
-    btn.style.borderColor = "#00ff00"; // Green flash
-    setTimeout(() => {
-      btn.style.borderColor = ""; // Reset to CSS default
-    }, 1000);
+  if (sessionStorage.getItem('splashShown') === 'true') {
+    splash.style.display = 'none';
+  }
 
-    // 0.5 Force Visibility (Safety Net)
+  if (btn) {
+    btn.style.borderColor = "#00ff00";
+    setTimeout(() => { btn.style.borderColor = ""; }, 1000);
     btn.style.opacity = '1';
     btn.classList.add('visible');
 
-    // 1. Click Handler
     btn.addEventListener('click', () => {
+      sessionStorage.setItem('splashShown', 'true');
       splash.style.opacity = '0';
-      // Fallback if transitionend doesn't fire
-      setTimeout(() => {
-        splash.style.display = 'none';
-      }, 500);
+      setTimeout(() => { splash.style.display = 'none'; }, 500);
     });
 
-    // 2. Specific Timing Loop (Open -> FW -> Open)
-    // 3s wait (OPEN), then Glitch -> Fuga, 1.5s wait (Fuga), then Glitch -> Open.
-
-    // Define independent loop function to avoid gc or scope issues
     const runGlitchSequence = () => {
-      // Phase 1: Wait 3000ms holding "OPEN"
       setTimeout(() => {
-        if (!document.contains(btn)) return; // Safety check
-
-        // Trigger Glitch Effect
+        if (!document.contains(btn)) return;
         triggerGlitch(btn);
-
-        // Swap Text to Japanese shortly after glitch starts
+        setTimeout(() => { setBtnText(btn, '風雅'); }, 100);
         setTimeout(() => {
-          setBtnText(btn, '風雅');
-        }, 100);
-
-        // Phase 2: Wait 1500ms holding "Japanese"
-        setTimeout(() => {
-          if (!document.contains(btn)) return; // Safety check
-
-          // Trigger Glitch Effect Back
+          if (!document.contains(btn)) return;
           triggerGlitch(btn);
-
-          // Swap Text back to OPEN
           setTimeout(() => {
             setBtnText(btn, 'OPEN');
-            // RESTART LOOP
             runGlitchSequence();
           }, 100);
-
         }, 1500);
-
       }, 3000);
     };
-
-    // Initial Start
     runGlitchSequence();
-  } else {
-    console.error("Splash button not found!");
   }
 }
 
@@ -95,18 +63,15 @@ function setBtnText(btn, text) {
 
 function triggerGlitch(btn) {
   btn.classList.remove('glitching');
-  void btn.offsetWidth; // Trigger reflow to restart animation
+  void btn.offsetWidth;
   btn.classList.add('glitching');
-  setTimeout(() => {
-    btn.classList.remove('glitching');
-  }, 500);
+  setTimeout(() => { btn.classList.remove('glitching'); }, 500);
 }
 
 function renderNav() {
   const navContainer = document.querySelector('.nav-links');
   if (!navContainer) return;
 
-  // We'll create a new LI for "Welcome"
   const li = document.createElement('li');
   const a = document.createElement('a');
   a.href = "#";
@@ -114,26 +79,20 @@ function renderNav() {
   a.addEventListener('click', (e) => {
     e.preventDefault();
     const splash = document.getElementById('splash');
-    splash.style.display = 'flex'; // Ensure it's not display:none
-
-    // Force reflow
+    splash.style.display = 'flex';
     void splash.offsetWidth;
-
-    splash.style.opacity = '1'; // Reset opacity
+    splash.style.opacity = '1';
     splash.classList.remove('hidden');
   });
 
-  // Prepend to list
   navContainer.insertBefore(li, navContainer.firstChild);
 }
 
 function renderHeader() {
-  // Update Hero Content
   document.querySelector('.hero-name').textContent = resumeData.personalInfo.name;
   document.querySelector('.hero-title').textContent = resumeData.personalInfo.title;
   document.querySelector('.hero-tagline').textContent = resumeData.personalInfo.summary.split('.')[0] + '.';
 
-  // Update Profile Initials (if placeholder exists)
   const placeholder = document.querySelector('.profile-placeholder');
   if (placeholder) {
     const initials = resumeData.personalInfo.name.split(' ').map(n => n[0]).join('');
@@ -149,7 +108,6 @@ function renderAbout() {
   }).join('');
   aboutContainer.innerHTML = summaryParagraphs;
 
-  // Transform Right Column to "Inspo" layout: Languages, Tools, Courses/Certs
   const highlightsContainer = document.querySelector('.about-highlights');
   if (highlightsContainer) {
     highlightsContainer.classList.add('inspo-layout');
@@ -178,8 +136,6 @@ function renderExperience() {
   resumeData.experience.forEach(job => {
     const card = document.createElement('div');
     card.className = 'exp-card';
-
-    // Create Logo Placeholder (Initial of company)
     const companyInitial = job.company.charAt(0);
 
     card.innerHTML = `
@@ -198,27 +154,26 @@ function renderExperience() {
 
 function renderProjects() {
   const container = document.getElementById('projects-list');
-  container.className = 'projects-vertical-list'; // Switch to vertical layout class
+  container.className = 'projects-vertical-list';
 
   resumeData.projects.forEach(project => {
     const card = document.createElement('div');
     card.className = 'project-card vertical';
-
-    // Determine tags
     const tags = determineTags(project);
 
-    // Select Image based on title keywords
-    let imgPath = 'public/assets/default_project.png'; // Fallback
+    let imgPath = 'https://media.giphy.com/media/26tnJtL42p3fA8hri/giphy.gif';
     const titleLower = project.title.toLowerCase();
 
     if (titleLower.includes('brain tumor')) {
-      imgPath = 'public/assets/user_img_0.png';
+      imgPath = 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Brain_MRI_Saggital_12.gif';
+    } else if (titleLower.includes('hair') || titleLower.includes('toufai')) {
+      imgPath = 'https://media.giphy.com/media/l41lFw057lAJQMlxK/giphy.gif';
     } else if (titleLower.includes('smoke') || titleLower.includes('iot')) {
-      imgPath = 'public/assets/user_img_1.png';
+      imgPath = 'https://media.giphy.com/media/3o7btQ8jDngMZUyJlm/giphy.gif';
+    } else if (titleLower.includes('crypto')) {
+      imgPath = 'https://media.giphy.com/media/UYpT9W8Qf5zQJNbjN2/giphy.gif';
     } else if (titleLower.includes('image classification') || titleLower.includes('ai')) {
-      imgPath = 'public/assets/user_img_4.png';
-    } else if (titleLower.includes('hair')) {
-      imgPath = 'public/assets/project_hair.png';
+      imgPath = 'https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif';
     }
 
     const mediaHtml = `
@@ -227,10 +182,7 @@ function renderProjects() {
       </div>
     `;
 
-    // Conditional Buttons
     let buttonsHtml = `<a href="#" class="btn-sm btn-code">Code</a>`;
-
-    // Add Video button specifically for the Brain Tumor project (checking title keyword)
     if (titleLower.includes('brain tumor')) {
       buttonsHtml += `<a href="#" class="btn-sm btn-video">Video</a>`;
     }
@@ -270,16 +222,12 @@ function determineTags(project) {
   if (desc.includes('blockchain')) defaultTags.push('Blockchain');
   if (desc.includes('security')) defaultTags.push('Cybersecurity');
 
-  // Remove default if others found and allow max 3
   if (defaultTags.length > 1) defaultTags.shift();
   return defaultTags.slice(0, 3);
 }
 
 function renderSkills() {
   const techContainer = document.getElementById('tech-skills');
-
-  // Technical = Technical + Tools
-  // Excluding spoken Languages based on user feedback
   const technicalSkills = [...resumeData.skills.technical, ...resumeData.skills.tools];
 
   technicalSkills.forEach(skill => {
@@ -289,7 +237,6 @@ function renderSkills() {
     techContainer.appendChild(tag);
   });
 
-  // Render Spoken Languages
   const langContainer = document.getElementById('lang-list');
   if (langContainer && resumeData.skills.languages) {
     resumeData.skills.languages.forEach(lang => {
@@ -309,7 +256,6 @@ function renderSkills() {
 }
 
 function setupNavigation() {
-  // Mobile Menu Toggle
   const btn = document.querySelector('.mobile-menu-btn');
   const nav = document.querySelector('.nav-links');
 
