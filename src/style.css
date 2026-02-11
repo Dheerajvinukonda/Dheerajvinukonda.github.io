@@ -757,24 +757,23 @@
 /* --- GLITCH BUTTON --- */
 .btn-glitch {
   position: relative;
-  background: transparent;
-  color: var(--color-primary);
-  border: 2px solid var(--color-primary);
-  /* PILL SHAPE */
-  border-radius: 9999px;
-  padding: 1rem 4rem;
-  font-size: 1.5rem;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
   font-family: var(--font-heading);
-  font-weight: 800;
   text-transform: uppercase;
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: 9999px;
   letter-spacing: 4px;
   cursor: pointer;
-  overflow: hidden;
+  overflow: visible;
+  /* Changed from hidden to allow pseudo-elements to show */
   transition: all 0.2s;
-
-  /* Initial Reveal */
-  opacity: 0;
-  animation: fadeIn 1s ease-out 1s forwards;
+  z-index: 1;
+  /* Base z-index for stacking context */
+  opacity: 1;
+  /* Always visible */
 }
 
 .btn-glitch:hover {
@@ -783,7 +782,7 @@
   box-shadow: 0 0 30px var(--color-primary);
 }
 
-/* Glitch Layers within the button container */
+/* Glitch Layers - positioned above main button */
 .btn-glitch::before,
 .btn-glitch::after {
   content: attr(data-text);
@@ -792,51 +791,44 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--color-bg);
+  padding: 1rem 2.5rem;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   opacity: 0;
   border-radius: 9999px;
   pointer-events: none;
+  letter-spacing: 4px;
+  font-size: 1.1rem;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
 }
 
 /* Trigger animations via .glitching class */
 .btn-glitch.glitching::before {
-  content: attr(data-text);
   color: #ff00c1;
-  z-index: 2;
-  opacity: 1;
-  /* Force visibility */
-  animation: glitch-layer-1 0.4s linear;
-  /* Fast one-shot glitch */
+  z-index: 10;
+  /* High z-index to show above everything */
+  opacity: 1 !important;
+  animation: glitch-layer-1 0.6s linear;
 }
 
 .btn-glitch.glitching::after {
-  content: attr(data-text);
   color: #00fff9;
-  z-index: 1;
-  opacity: 1;
-  /* Force visibility */
-  animation: glitch-layer-2 0.4s linear;
+  z-index: 9;
+  /* Just below ::before */
+  opacity: 1 !important;
+  animation: glitch-layer-2 0.6s linear;
 }
 
-/* Border Glitch Sync */
+/* Border Glitch - make button shake */
 .btn-glitch.glitching {
   opacity: 1 !important;
-  /* Critical Fix: Force opacity 1 to override any fade-in reset */
-  animation: glitch-border 0.4s linear;
+  animation: glitch-border 0.6s linear;
 }
 
-/* Initial Fade In remains separate */
-.btn-glitch {
-  opacity: 1;
-  /* Force Visible */
-  /* animation: fadeIn 1s ease-out 1s forwards; <-- REMOVED to fix bug */
-}
-
-/* Ensure button stays visible after animation */
+/* Ensure button stays visible */
 .btn-glitch.visible {
   opacity: 1;
   animation: none;
