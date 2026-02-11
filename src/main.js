@@ -26,7 +26,6 @@ function setupSplash() {
   }
 
   if (btn) {
-    // Visual Debug (green flash removed after testing)
     btn.style.opacity = '1';
     btn.classList.add('visible');
 
@@ -36,38 +35,21 @@ function setupSplash() {
       setTimeout(() => { splash.style.display = 'none'; }, 500);
     });
 
-    // Glitch Sequence: OPEN (3s) → glitch → 風雅 (1.5s) → glitch → OPEN (repeat)
     const runGlitchSequence = () => {
-      // Phase 1: Hold "OPEN" for 3 seconds
       setTimeout(() => {
         if (!document.contains(btn)) return;
-
-        // Start glitch animation
         triggerGlitch(btn);
-
-        // Change text to Japanese during glitch
-        setTimeout(() => {
-          setBtnText(btn, '風雅');
-        }, 200);
-
-        // Phase 2: Hold "風雅" for 1.5 seconds
+        setTimeout(() => { setBtnText(btn, '風雅'); }, 200);
         setTimeout(() => {
           if (!document.contains(btn)) return;
-
-          // Start glitch animation back
           triggerGlitch(btn);
-
-          // Change text to OPEN during glitch
           setTimeout(() => {
             setBtnText(btn, 'OPEN');
-            // Restart the cycle
             runGlitchSequence();
           }, 200);
         }, 1500);
       }, 3000);
     };
-
-    // Start the sequence
     runGlitchSequence();
   }
 }
@@ -177,20 +159,20 @@ function renderProjects() {
     card.className = 'project-card vertical';
     const tags = determineTags(project);
 
-    // Using reliable Giphy media CDN URLs
-    let imgPath = 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHZ5czBvYTNqb3NtNDJoNDJoNDJoNDJoNDJoNDJoNDJoNDJoNDJoMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tn33aiTi1jkl6H6/giphy.gif';
+    // Working Tenor GIF URLs from stable sources
+    let imgPath = 'https://media.tenor.com/On79ZrtC_9EAAAAC/neural-network-artificial-intelligence.gif';
     const titleLower = project.title.toLowerCase();
 
     if (titleLower.includes('brain tumor')) {
-      imgPath = 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKMMlq8TUWDbd6M/giphy.gif';
+      imgPath = 'https://media.tenor.com/5iWZ0kZdpa8AAAAC/brain-mri.gif';
     } else if (titleLower.includes('hair') || titleLower.includes('toufai')) {
-      imgPath = 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26FPy3QZQqGtDcrja/giphy.gif';
+      imgPath = 'https://media.tenor.com/wL0KUqAXiuQAAAAC/hair-salon.gif';
     } else if (titleLower.includes('smoke') || titleLower.includes('iot')) {
-      imgPath = 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tPplGWjN0xLybiU/giphy.gif';
+      imgPath = 'https://media.tenor.com/QKJk9Z3UgHIAAAAC/circuit-board.gif';
     } else if (titleLower.includes('crypto')) {
-      imgPath = 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/trN9ht5RlE3Dcwavg2/giphy.gif';
+      imgPath = 'https://media.tenor.com/6aQfFDZ2VNEAAAAC/crypto-bitcoin.gif';
     } else if (titleLower.includes('image classification') || titleLower.includes('ai')) {
-      imgPath = 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JqDeI2yjpSRgdh35oe/giphy.gif';
+      imgPath = 'https://media.tenor.com/On79ZrtC_9EAAAAC/neural-network-artificial-intelligence.gif';
     }
 
     const mediaHtml = `
