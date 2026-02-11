@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Purple Phoenix/Swan -->
+  <path d="M50 20 Q30 30 25 45 Q20 60 30 70 L40 75 Q45 80 50 90 Q55 80 60 75 L70 70 Q80 60 75 45 Q70 30 50 20 M35 35 Q30 40 30 50 Q30 55 35 58 M65 35 Q70 40 70 50 Q70 55 65 58" 
+        fill="#8B2BE2" 
+        stroke="#A855F7" 
+        stroke-width="1.5"
+        filter="url(#glow)"/>
+</svg>
