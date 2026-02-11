@@ -1,0 +1,68 @@
+/* Mobile fallback for neural network animation */
+/* Mobile browsers don't support CSS animation of SVG cx/cy attributes well */
+@media (max-width: 768px) {
+
+    /* Disable complex position animations on mobile */
+    .pulse {
+        animation: none !important;
+    }
+
+    .node {
+        animation: mobileNodePulse 2s ease-in-out infinite !important;
+    }
+
+    /* Simple opacity-based animation for mobile */
+    .pulse-1,
+    .pulse-2,
+    .pulse-3 {
+        animation: mobilePulseFade 3s ease-in-out infinite !important;
+        animation-delay: 0s;
+    }
+
+    .pulse-4,
+    .pulse-5,
+    .pulse-6 {
+        animation: mobilePulseFade 3s ease-in-out infinite !important;
+        animation-delay: 0.5s;
+    }
+
+    .pulse-7,
+    .pulse-8,
+    .pulse-9 {
+        animation: mobilePulseFade 3s ease-in-out infinite !important;
+        animation-delay: 1s;
+    }
+
+    .pulse-10,
+    .pulse-11,
+    .pulse-12 {
+        animation: mobilePulseFade 3s ease-in-out infinite !important;
+        animation-delay: 1.5s;
+    }
+}
+
+@keyframes mobilePulseFade {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes mobileNodePulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+        filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.5));
+    }
+
+    50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 12px rgba(0, 229, 255, 1));
+    }
+}
