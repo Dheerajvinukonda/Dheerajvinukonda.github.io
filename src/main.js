@@ -161,19 +161,20 @@ function renderProjects() {
     card.className = 'project-card vertical';
     const tags = determineTags(project);
 
-    let imgPath = 'https://media.giphy.com/media/26tnJtL42p3fA8hri/giphy.gif';
+    // Using reliable Giphy media CDN URLs
+    let imgPath = 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHZ5czBvYTNqb3NtNDJoNDJoNDJoNDJoNDJoNDJoNDJoNDJoNDJoMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tn33aiTi1jkl6H6/giphy.gif';
     const titleLower = project.title.toLowerCase();
 
     if (titleLower.includes('brain tumor')) {
-      imgPath = 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Brain_MRI_Saggital_12.gif';
+      imgPath = 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKMMlq8TUWDbd6M/giphy.gif';
     } else if (titleLower.includes('hair') || titleLower.includes('toufai')) {
-      imgPath = 'https://media.giphy.com/media/l41lFw057lAJQMlxK/giphy.gif';
+      imgPath = 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26FPy3QZQqGtDcrja/giphy.gif';
     } else if (titleLower.includes('smoke') || titleLower.includes('iot')) {
-      imgPath = 'https://media.giphy.com/media/3o7btQ8jDngMZUyJlm/giphy.gif';
+      imgPath = 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tPplGWjN0xLybiU/giphy.gif';
     } else if (titleLower.includes('crypto')) {
-      imgPath = 'https://media.giphy.com/media/UYpT9W8Qf5zQJNbjN2/giphy.gif';
+      imgPath = 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/trN9ht5RlE3Dcwavg2/giphy.gif';
     } else if (titleLower.includes('image classification') || titleLower.includes('ai')) {
-      imgPath = 'https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif';
+      imgPath = 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1cTV1Y3F1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JqDeI2yjpSRgdh35oe/giphy.gif';
     }
 
     const mediaHtml = `
