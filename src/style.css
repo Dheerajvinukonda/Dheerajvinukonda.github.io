@@ -1897,8 +1897,8 @@ ul {
 .project-img-preview {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  /* Ensures image fills the box without stretching */
+  object-fit: contain;
+  /* Show full GIF without cropping */
   transition: transform 0.5s;
 }
 
