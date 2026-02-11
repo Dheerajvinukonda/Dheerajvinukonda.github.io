@@ -85,62 +85,11 @@
   stroke-linecap: round;
 }
 
-/* Animated Pulses */
+/* Animated Pulses - animations handled by JavaScript (neural-animation.js) for mobile compatibility */
 .pulse {
   fill: #00e5ff;
   filter: drop-shadow(0 0 4px rgba(0, 229, 255, 1));
   opacity: 0;
-  /* CSS animations disabled - now handled by JavaScript for mobile compatibility */
-}
-
-/* Input to Hidden layer pulses - animations now in neural-animation.js */
-.pulse-1 {
-  /* animation: travelPulse1 4s ease-in-out infinite; */
-}
-
-.pulse-2 {
-  /* animation: travelPulse2 4s ease-in-out infinite; */
-}
-
-.pulse-3 {
-  /* animation: travelPulse3 4s ease-in-out infinite; */
-}
-
-.pulse-4 {
-  /* animation: travelPulse4 4s ease-in-out infinite; */
-}
-
-.pulse-5 {
-  /* animation: travelPulse5 4s ease-in-out infinite; */
-}
-
-.pulse-6 {
-  /* animation: travelPulse6 4s ease-in-out infinite; */
-}
-
-/* Hidden to Output layer pulses - animations now in neural-animation.js */
-.pulse-7 {
-  /* animation: travelPulse7 4s ease-in-out infinite; */
-}
-
-.pulse-8 {
-  /* animation: travelPulse8 4s ease-in-out infinite; */
-}
-
-.pulse-9 {
-  /* animation: travelPulse9 4s ease-in-out infinite; */
-}
-
-.pulse-10 {
-  /* animation: travelPulse10 4s ease-in-out infinite; */
-}
-
-.pulse-11 {
-  /* animation: travelPulse11 4s ease-in-out infinite; */
-}
-
-.pulse-12 {
-  /* animation: travelPulse12 4s ease-in-out infinite; */
 }
 
 /* Pulse animations - Forward (0-45%) then Backward (50-95%) */
@@ -591,56 +540,26 @@
   }
 }
 
-/* Nodes/Neurons - sync with pulses */
-/* Timings:
-   Input: Glow @ 0% (start) & 95% (return)
-   Hidden: Glow @ 20% (arrival) & 70% (return arrival)
-   Output: Glow @ 45% (arrival) & 50% (return start)
-*/
+/* Nodes/Neurons - animations handled by JavaScript (neural-animation.js) for mobile compatibility */
 
 .node {
   fill: url(#nodeGlow);
   stroke: #00e5ff;
   stroke-width: 2;
   filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.5));
-  /* Node animations now handled by JavaScript for mobile compatibility */
 }
 
 .node.input {
   fill: #0055ff;
-  /* animation: pulseNodeInput 4s ease-in-out infinite; */
-  /* animation-delay: 0s; */
-}
-
-.node.input.delay-1 {
-  /* animation-delay: 0.1s; */
 }
 
 .node.hidden {
   fill: #0088ff;
-  /* animation: pulseNodeHidden 4s ease-in-out infinite; */
-  /* animation-delay: 0s; */
-}
-
-.node.hidden.delay-1 {
-  /* animation-delay: 0.15s; */
-}
-
-.node.hidden.delay-2 {
-  /* animation-delay: 0.2s; */
 }
 
 .node.output {
   fill: #00e5ff;
-  /* animation: pulseNodeOutput 4s ease-in-out infinite; */
-  /* animation-delay: 0s; */
 }
-
-.node.output.delay-1 {
-  /* animation-delay: 0.1s; */
-}
-
-/* Manual delays removed - now handled by JavaScript */
 
 @keyframes pulseNodeInput {
 
