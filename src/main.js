@@ -71,14 +71,24 @@ function setupBackButton() {
   if (backBtn) {
     backBtn.addEventListener('click', (e) => {
       e.preventDefault();
+
+      // Clear session storage
       sessionStorage.removeItem('splashShown');
+
+      // Get splash and show it
       const splash = document.getElementById('splash');
       splash.style.display = 'flex';
       splash.style.opacity = '1';
-      // Reinitialize splash with fresh button
-      setTimeout(() => {
-        setupSplash();
-      }, 100);
+
+      // Get the button and reset it
+      const btn = document.getElementById('enter-site');
+      if (btn) {
+        // Make sure button is visible
+        btn.style.opacity = '1';
+        btn.classList.add('visible');
+        btn.setAttribute('data-text', 'OPEN');
+        btn.textContent = 'OPEN';
+      }
     });
   }
 }
